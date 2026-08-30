@@ -1,0 +1,75 @@
+# .goreleaser.yaml
+# Run: goreleaser release --snapshot --clean
+# See: https://goreleaser.com
+
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: guddit
+    main: ./cmd/guddit/main.go
+    binary: guddit
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+    flags:
+      - -trimpath
+
+archives:
+  - format: tar.gz
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  version_template: '{{ .Tag }}-next'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+
+release:
+  footer: |
+    ---
+    **guddit v{{ .Version }}** — Terminal Reddit browser
+    Build date: {{ .Date }}
+    Commit: {{ .Commit }}
+
+    Install: `brew install minoa/tap/guddit` or `go install github.com/minoa/guddit/cmd/guddit@latest`
+
+    **Auth required**: Reddit's unauthenticated `.json` endpoints are blocked in 2026.
+    Use `guddit auth login` or `--cookie/--cookie-file`.
+
+homebrew_casks:
+  - name: guddit
+    description: "Terminal Reddit browser — search, read, scrape Reddit"
+    homepage: "https://github.com/minoa/guddit"
+    tap:
+      owner: minoa
+      name: homebrew-tap
+    repository:
+      owner: minoa
+      name: guddit
+    commit_author:
+      name: goreleaser
+      email: goreleaser@minoa.dev
+    license: "MIT"
