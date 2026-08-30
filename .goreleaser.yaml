@@ -54,22 +54,7 @@ release:
     Build date: {{ .Date }}
     Commit: {{ .Commit }}
 
-    Install: `brew install minoa/tap/guddit` or `go install github.com/minoa/guddit/cmd/guddit@latest`
+    Install: `go install github.com/minoa/guddit/cmd/guddit@latest`
 
     **Auth required**: Reddit's unauthenticated `.json` endpoints are blocked in 2026.
     Use `guddit auth login` or `--cookie/--cookie-file`.
-
-homebrew_casks:
-  - name: guddit
-    description: "Terminal Reddit browser — search, read, scrape Reddit"
-    homepage: "https://github.com/minoa/guddit"
-    tap:
-      owner: minoa
-      name: homebrew-tap
-    repository:
-      owner: minoa
-      name: guddit
-    commit_author:
-      name: goreleaser
-      email: goreleaser@minoa.dev
-    license: "MIT"
