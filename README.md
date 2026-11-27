@@ -2,6 +2,8 @@
 
 > THIS PROJECT WAS MADE PARTIALLY USING AGENTIC AI CODING TOOLS
 
+> **WIP:** unfinished and not working in its current state. A lot is left to do.
+
 Reddit from your terminal, no API key. Uses Reddit's public `.json` endpoints with `old.reddit.com` fallback, cookie auth, and OAuth script-app support. Search, read threads, browse subreddits, and run it as a local HTTP API.
 
 > **2026 note**: Reddit now serves block pages to unauthenticated `.json` requests. Authenticate with cookies (exported from your browser) or OAuth script-app credentials. The tool works fully once authenticated.
